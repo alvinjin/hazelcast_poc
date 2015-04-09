@@ -27,11 +27,12 @@ public class HBaseMapStore implements MapStore<String, User> {
             byte[] bname = r.getValue(Bytes.toBytes("cf_basic"), Bytes.toBytes("name"));
             byte[] blocation = r.getValue(Bytes.toBytes("cf_basic"), Bytes.toBytes("location"));
             byte[] bage = r.getValue(Bytes.toBytes("cf_basic"), Bytes.toBytes("age"));
-            byte[] bdetails = r.getValue(Bytes.toBytes("cf_text"), Bytes.toBytes("details"));
+            byte[] bbalance = r.getValue(Bytes.toBytes("cf_basic"), Bytes.toBytes("balance"));
+
             user.setName(Bytes.toString(bname));
             user.setLocation(Bytes.toString(blocation));
-            user.setDetails(Bytes.toString(bdetails));
             user.setAge(Bytes.toInt(bage));
+            user.setBalance(Bytes.toInt(bbalance));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -47,7 +48,8 @@ public class HBaseMapStore implements MapStore<String, User> {
         put.add(Bytes.toBytes("cf_basic"), Bytes.toBytes("name"), Bytes.toBytes(user.getName()));
         put.add(Bytes.toBytes("cf_basic"), Bytes.toBytes("age"), Bytes.toBytes(user.getAge()));
         put.add(Bytes.toBytes("cf_basic"), Bytes.toBytes("location"), Bytes.toBytes(user.getLocation()));
-        put.add(Bytes.toBytes("cf_text"), Bytes.toBytes("details"), Bytes.toBytes(user.getDetails()));
+        put.add(Bytes.toBytes("cf_basic"), Bytes.toBytes("balance"), Bytes.toBytes(user.getBalance()));
+
         try {
             htable.put(put);
         } catch (IOException e) {
@@ -66,7 +68,8 @@ public class HBaseMapStore implements MapStore<String, User> {
                 put.add(Bytes.toBytes("cf_basic"), Bytes.toBytes("name"), Bytes.toBytes(user.getName()));
                 put.add(Bytes.toBytes("cf_basic"), Bytes.toBytes("age"), Bytes.toBytes(user.getAge()));
                 put.add(Bytes.toBytes("cf_basic"), Bytes.toBytes("location"), Bytes.toBytes(user.getLocation()));
-                put.add(Bytes.toBytes("cf_text"), Bytes.toBytes("details"), Bytes.toBytes(user.getDetails()));
+                put.add(Bytes.toBytes("cf_basic"), Bytes.toBytes("balance"), Bytes.toBytes(user.getBalance()));
+
                 rlist.add(put);
             }
             htable.batch(rlist);
