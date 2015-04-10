@@ -39,16 +39,16 @@ public class HBaseService {
             HBaseAdmin admin = new HBaseAdmin(config);
 
             // Instantiating table descriptor class
-            HTableDescriptor tableDescriptor = new HTableDescriptor("user");
+            HTableDescriptor tableDescriptor = new HTableDescriptor("paytm");
 
             // Adding column families to table descriptor
-            tableDescriptor.addFamily(new HColumnDescriptor("cf_basic"));
+            tableDescriptor.addFamily(new HColumnDescriptor("account"));
 
             // Execute the table through admin
             admin.createTable(tableDescriptor);
 
-            htable = new HTable(config, "user");
-            System.out.println(" Table created ");
+            htable = new HTable(config, "paytm");
+            System.out.println("Table created");
 
 
         } catch (IOException e) {

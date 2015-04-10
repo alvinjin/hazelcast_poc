@@ -7,30 +7,30 @@ import com.hazelcast.core.IMap;
 import java.util.Properties;
 import java.util.UUID;
 
-public class Main {
+public class HCPersistenceTest {
     public static void main(String[] args) {
         HazelcastInstance hz = Hazelcast.newHazelcastInstance(getConfig());
         IMap<String, User> map = hz.getMap("wallets");
-        System.out.println( map.get("u-6") );
+        System.out.println( map.get("id1") );
         User user = new User();
-        user.setName("Enes Akar");
+        user.setName("UserA");
         user.setAge(29);
-        user.setLocation("Istanbul");
+        user.setLocation("Toronto");
         user.setBalance(100);
 
-        map.put("u-5",user);
+        map.put("id1",user);
 
         User user2 = new User();
-        user2.setName("Mehmet Dogan");
-        user2.setAge(29);
-        user2.setLocation("Istanbul");
+        user2.setName("UserB");
+        user2.setAge(30);
+        user2.setLocation("Toronto");
         user2.setBalance(200);
 
-        map.put("u-6",user2);
-        System.out.println( map.get("u-5") );
-        System.out.println( map.get("u-6") );
-        map.remove("u-5");
-        System.out.println( map.get("u-5") );
+        map.put("id2",user2);
+       // System.out.println( map.get("id1") );
+       // System.out.println( map.get("id2") );
+        map.remove("id1");
+       // System.out.println( map.get("id2") );
 
     }
 

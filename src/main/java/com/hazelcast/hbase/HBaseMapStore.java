@@ -24,10 +24,10 @@ public class HBaseMapStore implements MapStore<String, User> {
             Result r = htable.get(get);
             if(r.isEmpty())
                 return null;
-            byte[] bname = r.getValue(Bytes.toBytes("cf_basic"), Bytes.toBytes("name"));
-            byte[] blocation = r.getValue(Bytes.toBytes("cf_basic"), Bytes.toBytes("location"));
-            byte[] bage = r.getValue(Bytes.toBytes("cf_basic"), Bytes.toBytes("age"));
-            byte[] bbalance = r.getValue(Bytes.toBytes("cf_basic"), Bytes.toBytes("balance"));
+            byte[] bname = r.getValue(Bytes.toBytes("account"), Bytes.toBytes("name"));
+            byte[] blocation = r.getValue(Bytes.toBytes("account"), Bytes.toBytes("location"));
+            byte[] bage = r.getValue(Bytes.toBytes("account"), Bytes.toBytes("age"));
+            byte[] bbalance = r.getValue(Bytes.toBytes("account"), Bytes.toBytes("balance"));
 
             user.setName(Bytes.toString(bname));
             user.setLocation(Bytes.toString(blocation));
@@ -45,10 +45,10 @@ public class HBaseMapStore implements MapStore<String, User> {
     public synchronized void store(String key, User user) {
         HTable htable = HBaseService.getInstance().getHtable();
         Put put = new Put(Bytes.toBytes(key));
-        put.add(Bytes.toBytes("cf_basic"), Bytes.toBytes("name"), Bytes.toBytes(user.getName()));
-        put.add(Bytes.toBytes("cf_basic"), Bytes.toBytes("age"), Bytes.toBytes(user.getAge()));
-        put.add(Bytes.toBytes("cf_basic"), Bytes.toBytes("location"), Bytes.toBytes(user.getLocation()));
-        put.add(Bytes.toBytes("cf_basic"), Bytes.toBytes("balance"), Bytes.toBytes(user.getBalance()));
+        put.add(Bytes.toBytes("account"), Bytes.toBytes("name"), Bytes.toBytes(user.getName()));
+        put.add(Bytes.toBytes("account"), Bytes.toBytes("age"), Bytes.toBytes(user.getAge()));
+        put.add(Bytes.toBytes("account"), Bytes.toBytes("location"), Bytes.toBytes(user.getLocation()));
+        put.add(Bytes.toBytes("account"), Bytes.toBytes("balance"), Bytes.toBytes(user.getBalance()));
 
         try {
             htable.put(put);
@@ -65,10 +65,10 @@ public class HBaseMapStore implements MapStore<String, User> {
             for (String key : userMap.keySet()) {
                 Put put = new Put(Bytes.toBytes(key));
                 User user = userMap.get(key);
-                put.add(Bytes.toBytes("cf_basic"), Bytes.toBytes("name"), Bytes.toBytes(user.getName()));
-                put.add(Bytes.toBytes("cf_basic"), Bytes.toBytes("age"), Bytes.toBytes(user.getAge()));
-                put.add(Bytes.toBytes("cf_basic"), Bytes.toBytes("location"), Bytes.toBytes(user.getLocation()));
-                put.add(Bytes.toBytes("cf_basic"), Bytes.toBytes("balance"), Bytes.toBytes(user.getBalance()));
+                put.add(Bytes.toBytes("account"), Bytes.toBytes("name"), Bytes.toBytes(user.getName()));
+                put.add(Bytes.toBytes("account"), Bytes.toBytes("age"), Bytes.toBytes(user.getAge()));
+                put.add(Bytes.toBytes("account"), Bytes.toBytes("location"), Bytes.toBytes(user.getLocation()));
+                put.add(Bytes.toBytes("account"), Bytes.toBytes("balance"), Bytes.toBytes(user.getBalance()));
 
                 rlist.add(put);
             }
